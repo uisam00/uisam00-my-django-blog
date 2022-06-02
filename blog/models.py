@@ -16,7 +16,8 @@ class Post(models.Model):
         ('publicado', 'Publicado')
     )
     titulo = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=250)
+    slug = models.SlugField(max_length=250,
+                            unique=True)
     autor = models.ForeignKey(User,
                               on_delete=models.CASCADE)
     conteudo = models.TextField()
@@ -37,3 +38,6 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse("post_detail", args=[self.slug])
+
+    def get_absolute_url_update(self):
+        return reverse("post_edit", args=[self.slug])

@@ -4,7 +4,7 @@ from .models import Post
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'autor', 'publicado', 'status')
+    list_display = ('titulo', 'autor', 'publicado', 'alterado', 'status')
     list_filter = ('status', 'criado', 'publicado')
     raw_id_fields = ('autor',)
     date_hierarchy = 'publicado'
