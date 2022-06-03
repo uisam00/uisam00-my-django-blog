@@ -1,8 +1,10 @@
 from django.db import models
+from django.dispatch import receiver
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
-
+from django.utils.text import slugify
+from django.db.models.signals import post_save
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
@@ -44,3 +46,9 @@ class Post(models.Model):
 
     def get_absolute_url_delete(self):
         return reverse("post_delete", args=[self.slug])
+
+@receiver(post_save, sender=Post)
+def insert_slug(sender, instance, **kwargs):
+    if not instance.slug:
+        instance.slug = slugify(instance.titulo)
+        return instance.save()
