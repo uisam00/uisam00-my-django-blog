@@ -3,7 +3,7 @@
 {% block content %}
     <h1>Deletar Postagem</h1>
     <form action="" method="post">
-        <p>Você tem certeza que deseja excluir a postagem: "{{object.titulo}}"?</p>
+        <p>Você tem certeza que deseja excluir a postagem: "{{object.title}}"?</p>
         <input type="submit" value="Confirmar">{% csrf_token %}
     </form>
 {% endblock content %}

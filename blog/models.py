@@ -9,34 +9,36 @@ from django.db.models.signals import post_save
 class PublishedManager(models.Manager):
     def get_queryset(self):
         return super(PublishedManager, self).get_queryset() \
-            .filter(status='publicado')
+            .filter(status='posted')
 
 
 class Post(models.Model):
     STATUS = (
-        ('rascunho', 'Rascunho'),
-        ('publicado', 'Publicado')
+        ('draft', 'Draft'),
+        ('posted', 'Posted')
     )
-    titulo = models.CharField(max_length=250)
+    title = models.CharField(max_length=250, unique=True)
     slug = models.SlugField(max_length=250,
                             unique=True)
-    autor = models.ForeignKey(User,
+    subtitle = models.CharField(max_length=250)
+
+    author = models.ForeignKey(User,
                               on_delete=models.CASCADE)
-    conteudo = models.TextField()
-    publicado = models.DateTimeField(default=timezone.now)
-    criado = models.DateTimeField(auto_now_add=True)
-    alterado = models.DateTimeField(auto_now=True)
+    article = models.TextField()
+    posted = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True)
+    changed = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10,
                               choices=STATUS,
-                              default='rascunho')
+                              default='draft')
     objects = models.Manager()
     published = PublishedManager()
 
     class Meta:
-        ordering = ('-publicado',)
+        ordering = ('-posted',)
 
     def __str__(self):
-        return self.titulo
+        return self.title
 
     def get_absolute_url(self):
         return reverse("post_detail", args=[self.slug])
@@ -50,5 +52,5 @@ class Post(models.Model):
 @receiver(post_save, sender=Post)
 def insert_slug(sender, instance, **kwargs):
     if not instance.slug:
-        instance.slug = slugify(instance.titulo)
+        instance.slug = slugify(instance.title)
         return instance.save()

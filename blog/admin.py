@@ -4,9 +4,9 @@ from .models import Post
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'autor', 'publicado', 'alterado', 'status')
-    list_filter = ('status', 'criado', 'publicado')
-    raw_id_fields = ('autor',)
-    date_hierarchy = 'publicado'
-    search_fields = ('titulo', 'conteudo')
-    prepopulated_fields = {'slug': ('titulo',)}
+    list_display = ('title', 'author', 'posted', 'changed', 'status')
+    list_filter = ('status', 'created', 'posted')
+    raw_id_fields = ('author',)
+    date_hierarchy = 'posted'
+    search_fields = ('title', 'article')
+    prepopulated_fields = {'slug': ('title',)}
