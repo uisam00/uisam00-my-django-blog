@@ -1,9 +1,40 @@
 {% extends 'base.html' %}
-{% block title %} Blog - Editar Post {% endblock title %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} Sam's - Editar Post {% endblock title %}
+{% block header %}
+    {% if object.image.url is not None %}
+        <header class="masthead" style="background-image: url({{ object.image.url }})">
+    {% else %}
+       <header class="masthead" style="background-image: url({% static 'img/home-bg.jpg' %})">
+    {% endif %}
+{% endblock header %}
+
+{% block site-heading %}
+    <h1>{{ object.title }}</h1>
+    <span class="subheading">{{ object.subtitle }}</span>
+{% endblock site-heading %}
 {% block content %}
-    <h1>Editar Postagem</h1>
-    <form action="" method="post">
-        {{ form.as_p }}
-        <input type="submit" value="Editar">{% csrf_token %}
-    </form>
+
+    <div class="container justify-content-center">
+        <div class="card">
+            <div class="card-header">
+                <h1>Editar Postagem</h1>
+            </div>
+            <div class="card-body">
+               <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    {{ form|crispy }}
+                   <div class="row buttons-row" >
+                        <div class="col-6">
+                            <input class="btn btn-primary" type="submit" value="Editar">
+                        </div>
+                        <div class="col-6">
+                             <a class="btn btn-danger" href="{{object.get_absolute_url}}">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock content %}

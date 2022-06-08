@@ -1,9 +1,39 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %} Blog - Deletar Post {% endblock title %}
+
+{% block header %}
+    {% if object.image.url is not None %}
+        <header class="masthead" style="background-image: url({{ object.image.url }})">
+    {% else %}
+       <header class="masthead" style="background-image: url({% static 'img/home-bg.jpg' %})">
+    {% endif %}
+{% endblock header %}
+
+{% block site-heading %}
+    <h1>{{ object.title }}</h1>
+    <span class="subheading">{{ object.subtitle }}</span>
+{% endblock site-heading %}
+
 {% block content %}
-    <h1>Deletar Postagem</h1>
-    <form action="" method="post">
-        <p>Você tem certeza que deseja excluir a postagem: "{{object.title}}"?</p>
-        <input type="submit" value="Confirmar">{% csrf_token %}
-    </form>
+    <div class="container justify-content-center">
+        <div class="card">
+            <div class="card-header">
+                    <h1>Deletar Postagem</h1>
+            </div>
+            <div class="card-body">
+                <form action="" method="post">{% csrf_token %}
+                    <p>Você tem certeza que deseja excluir a postagem: "{{object.title}}"?</p>
+                    <div class="row buttons-row">
+                        <div class="col-6">
+                            <a href="{{object.get_absolute_url}}" class="btn btn-primary">Voltar</a>
+                        </div>
+                        <div class="col-6">
+                            <input class="btn btn-danger" type="submit" value="Confirmar">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock content %}

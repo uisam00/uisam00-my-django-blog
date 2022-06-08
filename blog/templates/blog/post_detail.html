@@ -1,11 +1,38 @@
 {% extends 'base.html' %}
-{% block title %} Blog - Detalhe {% endblock title %}
+{% load static %}
+{% block title %} Sam's - Post {% endblock title %}
+
+{% block header %}
+    {% if object.image.url is not None %}
+        <header class="masthead" style="background-image: url({{ object.image.url }})">
+    {% else %}
+       <header class="masthead" style="background-image: url({% static 'img/home-bg.jpg' %})">
+    {% endif %}
+{% endblock header %}
+
+{% block site-heading %}
+    <h1>{{ object.title }}</h1>
+    <span class="subheading">{{ object.subtitle }}</span>
+{% endblock site-heading %}
+
 {% block content %}
-    <div class="post-entry">
-        <h2>{{ custom.title }}</h2>
-        <p>{{ custom.article }} </p>
+    <div class="row">
+        <div class="col-12">
+            <div class="post-entry">
+                <h1>{{ object.title }}</h1>
+                <p>{{ object.article|safe }} </p>
+            </div>
+        </div>
+
+       {% if user.is_authenticated %}
+            <div class="row">
+                <div class="col-6">
+                    <a href="{{object.get_absolute_url_update}}" class="btn btn-primary">Editar</a>
+                </div>
+                <div class="col-6">
+                    <a href="{{object.get_absolute_url_delete}}" class="btn btn-danger">Deletar</a>
+                </div>
+            </div>
+       {% endif %}
     </div>
-    <a href="{{custom.get_absolute_url_update}}">Editar</a>
-    <br>
-    <a href="{{custom.get_absolute_url_delete}}">Deletar</a>
 {% endblock content %}

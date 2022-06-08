@@ -36,8 +36,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+    'ckeditor',
     'blog',
     'accounts',
+    'social',
+    'contact',
 ]
 
 MIDDLEWARE = [
@@ -63,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social.processors.social_list',
             ],
         },
     },
@@ -134,3 +138,18 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': None,
+        'width': 'auto',
+
+    },
+}
+
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = '07e883cbef2915'
+EMAIL_HOST_PASSWORD = 'b8eb88a447831b'
+EMAIL_PORT = '2525'
+
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

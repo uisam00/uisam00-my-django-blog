@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
-{% block title %} Blog {% endblock title %}
+{% load static %}
+{% block title %} Sam's - Blog {% endblock title %}
+
+{% block header %}
+    <header class="masthead" style="background-image: url({% static 'img/home-bg.jpg' %})">
+{% endblock header %}
+
+{% block site-heading %}
+    <h1>Sam's Blog</h1>
+    <span class="subheading">Blog desenvolvido com Django.</span>
+{% endblock site-heading %}
+
 {% block content %}
     {% for post in object_list %}
         <div class="post-preview">

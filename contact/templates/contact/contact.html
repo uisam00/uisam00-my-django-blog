@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Sam's - Contato {% endblock title %}
+
+{% block header %}
+    <header class="masthead" style="background-image: url({% static 'img/contact-bg.jpg' %})">
+{% endblock header %}
+
+{% block site-heading %}
+    <h1>Entre em contato conosco</h1>
+    <span class="subheading">Tem alguma pergunta?</span>
+{% endblock site-heading %}
+
+{% block content %}
+
+  <!-- Main Content -->
+  <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+
+              <form method="POST" action="{% url 'contact' %}">{% csrf_token %}
+              {{form|crispy}}
+              <br>
+              {% if success %}
+                  <div id="success">
+                    E-mail enviado com sucesso!
+                  </div>
+              {% else %}
+                  <div id="fail">
+                      Erro ao enviar seu e-mail!
+                  </div>
+              {% endif %}
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="sendMessageButton">Enviar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+    </div>
+
+{% endblock content %}
